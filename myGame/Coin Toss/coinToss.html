@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Toss Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="game-wrapper">
+        <div class="game-card">
+            <h1 class="game-title">Coin Toss</h1>
+            <p class="subtitle">Choose Heads or Tails</p>
+
+            <div class="buttons">
+                <button class="game-btn" onclick="play('heads')">Heads</button>
+                <button class="game-btn" onclick="play('tails')">Tails</button>
+            </div>
+
+            <div id="coin">?</div>
+
+            <h2 id="result" class="game-result"></h2>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
