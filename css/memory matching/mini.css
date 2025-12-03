@@ -1,0 +1,106 @@
+*{padding: 0;box-sizing: border-box}
+
+:root{
+    --bg-main:#464646;
+    --bg-card:#2D2727;
+    --border-color:#12a9bd;
+}
+/* .card{ 
+  width: 7rem;
+  height: 7rem;
+  background-color:rgb(90, 84, 84);
+  background-size: contain;                                    /* card(childdiv)  */
+ /* border: .6rem;
+ box-shadow:rgba(149,157,165,0.2)0px 8px 24px;
+ padding: 0.1rem;} */
+ 
+
+h1{
+    color: rgb(60, 60, 60);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;         /* match the */
+    font-size: 4rem;
+
+}
+span{
+    color:var(--border-color);          /*  image*/
+}
+  body{
+    display:flex;
+    align-items:center ;
+    justify-content: center;
+    flex-direction: column;
+    gap: 3rem;
+    height: 100vh;
+    margin: 0%;
+    background-color: var(--bg-main);
+    background-image:url(https://plus.unsplash.com/premium_photo-1673795751644-e42b58452dc0?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170);
+    overflow: hidden;
+}
+#card-section{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);  
+    gap: 1rem;         /* matrix the cards*/
+}
+.card{
+    position: relative;
+    transition: transform .6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+.card,.front_div,.back_div{
+    height: 7rem;
+    width: 7rem;
+    background-color: #12a9bd;
+    border-radius: 1rem;
+
+}
+
+.front_div,.back_div{
+    position: absolute;
+    backface-visibility: hidden;
+ }
+.front_div{
+    background: var(--border-color);
+    background-size: contain;
+    border-radius: 1rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 2rem;
+}
+.back_div {
+            transform: rotateY(180deg);
+            /* background-color: #6589F9; */
+            background-size: contain;
+            border-radius: 1rem;
+            background-repeat: no-repeat;
+            background-position: center center;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            padding: 2rem;
+        }
+        
+ .card_selected{
+        transform: rotateY(180deg);
+        }
+ .card_match .front_div{
+            background-color: var(--bg-card);
+        }
+#reset {
+  position: fixed;
+  bottom: 20px;      /* distance from bottom */
+  right: 20px;       /* distance from right */
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #00bcd4;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 1000;     /* keeps it above everything */
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+#reset:hover {
+  background-color: #0097a7;
+  transform: scale(1.05);
+}
