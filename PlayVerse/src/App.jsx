@@ -18,7 +18,7 @@ const PlayVerse = () => {
   const categories = [
     { id: 'all', name: 'All Games', icon: Gamepad2 },
     { id: 'action', name: 'Action', icon: Zap },
-    { id: 'rpg', name: 'RPG', icon: Sword },
+    { id: 'twoPlayer', name: 'Two-Player', icon: Sword },
     { id: 'racing', name: 'Racing', icon: TrendingUp },
     { id: 'strategy', name: 'Strategy', icon: Trophy },
     { id: 'adventure', name: 'Adventure', icon: Clock }

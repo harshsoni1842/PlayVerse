@@ -1,0 +1,110 @@
+:root {
+    --red: #d64545;
+    --green: #3bbf6e;
+    --text: #ffffff;
+}
+
+/* Background identical to your PlayVerse homepage */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(180deg, #0a0f2d, #000);
+    color: var(--text);
+    height: 100%;
+}
+
+/* Center wrapper */
+.game-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Game Card (same style as previous games) */
+.game-card {
+    width: 90%;
+    max-width: 650px;
+    padding: 35px;
+    border-radius: 25px;
+    background: linear-gradient(
+        135deg,
+        rgba(255,105,180,0.18),
+        rgba(0,122,255,0.18)
+    );
+    backdrop-filter: blur(18px);
+    box-shadow: 0 0 45px rgba(255,255,255,0.12);
+    text-align: center;
+    animation: fadeIn 0.6s ease;
+}
+
+.game-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+/* Main Reaction Box */
+#box {
+    width: 280px;
+    height: 280px;
+    background: var(--red);
+    border-radius: 22px;
+    margin: 35px auto 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    transition: background 0.25s, transform 0.1s;
+}
+
+#box:active {
+    transform: scale(0.97);
+}
+
+/* Result text */
+#result {
+    font-size: 20px;
+    margin-top: 10px;
+    min-height: 30px;
+}
+
+/* Best Score Area */
+.meta {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    font-size: 15px;
+    opacity: 0.9;
+}
+
+/* Reset button styled like your theme */
+.game-btn-sm {
+    padding: 6px 14px;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--text);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.game-btn-sm:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+    from { opacity:0; transform: translateY(20px); }
+    to   { opacity:1; transform: translateY(0); }
+}

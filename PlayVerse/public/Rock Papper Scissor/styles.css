@@ -1,0 +1,98 @@
+/* Global Background */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(180deg, #0a0f2d, #000);
+    color: white;
+}
+
+/* Center the game */
+.game-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* PlayVerse glowing card */
+.game-card {
+    width: 90%;
+    max-width: 700px;
+    padding: 40px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, rgba(255, 105, 180, 0.18), rgba(0, 122, 255, 0.18));
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 45px rgba(255, 255, 255, 0.1);
+    text-align: center;
+    animation: fadeIn 0.6s ease;
+}
+
+/* Title */
+.game-title {
+    font-size: 32px;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+/* Choices */
+#choices {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 1.5rem;
+}
+
+.choice {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    padding: 8px;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+}
+
+.choice:hover {
+    cursor: pointer;
+    transform: scale(1.08);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+}
+
+img {
+    height: 140px;
+    width: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Scoreboard */
+.score-board {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    gap: 5rem;
+    font-size: 1.6rem;
+}
+
+.score-value {
+    font-size: 3.5rem;
+    margin-bottom: 8px;
+}
+
+/* Message badge */
+.game-msg {
+    margin-top: 3rem;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 12px 25px;
+    border-radius: 12px;
+    font-size: 1.4rem;
+    backdrop-filter: blur(5px);
+    transition: 0.3s;
+}
+
+/* Fade Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

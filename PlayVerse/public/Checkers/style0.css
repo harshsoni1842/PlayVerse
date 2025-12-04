@@ -1,0 +1,387 @@
+/* ======================================================
+   Dark Neon — Polished + Share Tech Mono (Pixel-Futuristic)
+   - Share Tech Mono font imported
+   - Improved spacing, padding, hover states, and readability
+   ====================================================== */
+
+/* Import font */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root{
+    --bg-1: #07070a;
+    --bg-2: #0b0b0f;
+    --panel-bg: rgba(12,14,18,0.92);
+    --accent-mag: #ff3fa6;
+    --accent-cyan: #00f0ff;
+    --gold: #ffd166;
+    --muted: #d6d8da;
+    --tile-light: #ffffff;
+    --tile-dark: #e3e3e3;
+    --board-gap: 12px; /* outer padding around board */
+}
+
+/* -------------------- Global page -------------------- */
+body {
+    font-family: 'Share Tech Mono', "Press Start 2P", monospace;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(0,0,0,0.75), rgba(8,8,12,1) 30%),
+                linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    color: var(--muted);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 28px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* subtle background drift */
+@keyframes subtleShift {
+    0% { background-position: 0% 0%; }
+    50%{ background-position: 6% 10%; }
+    100% { background-position: 0% 0%; }
+}
+body { animation: subtleShift 20s ease-in-out infinite; }
+
+/* -------------------- Layout -------------------- */
+.game-container {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    max-width: 1200px;
+    width: 100%;
+    padding: 8px;
+}
+
+/* -------------------- Header -------------------- */
+.game-header { width: 100%; text-align: left; margin-bottom: 6px; }
+.game-title {
+    font-size: 20px;
+    color: var(--gold);
+    text-shadow: 0 4px 10px rgba(0,0,0,0.55);
+    margin-bottom: 6px;
+}
+.game-subtitle { font-size: 11px; opacity: 0.75; }
+
+/* -------------------- Board container -------------------- */
+.board-container {
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.25));
+    padding: var(--board-gap);
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 18px 50px rgba(0,0,0,0.7), inset 0 2px 12px rgba(255,255,255,0.02);
+    position: relative;
+}
+
+/* subtle outer frame glow */
+.board-container::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 12px;
+    pointer-events: none;
+    box-shadow:
+        0 0 60px rgba(255,255,255,0.03),
+        0 0 100px rgba(0,240,255,0.01);
+}
+
+/* -------------------- GAME BOARD (white) -------------------- */
+.game-board {
+    width: 520px;
+    height: 520px;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff; /* full white board */
+    border: 2px solid rgba(0,0,0,0.06);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.45), inset 0 0 16px rgba(0,0,0,0.04);
+    position: relative;
+}
+
+/* visible grid lines inside board */
+.game-board::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size: calc(100% / 8) calc(100% / 8);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* -------------------- Square styling -------------------- */
+.square {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+    z-index: 3;
+}
+
+/* light and dark tile colors (white board aesthetic) */
+.square.light { background: var(--tile-light); }
+.square.dark  { background: var(--tile-dark); }
+
+/* tile borders */
+.square { border: 0.5px solid rgba(0,0,0,0.04); }
+
+/* hover subtle lift */
+.square:hover {
+    transform: translateY(-4px);
+    z-index: 6;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+/* last move highlight */
+.square.last-move {
+    box-shadow: 0 0 0 3px rgba(255,210,100,0.12), 0 10px 30px rgba(0,0,0,0.12);
+}
+
+/* valid move (glow) */
+.square.valid-move {
+    outline: 2px solid rgba(0,240,255,0.35);
+    box-shadow: 0 0 30px rgba(0,240,255,0.18), inset 0 0 6px rgba(0,240,255,0.06);
+}
+
+/* capture-available stronger */
+.square.valid-move.capture {
+    outline-color: rgba(255,63,166,0.38);
+    box-shadow: 0 0 40px rgba(255,63,166,0.16);
+}
+
+/* selected piece tile */
+.square.selected {
+    outline: 3px solid rgba(255,63,166,0.45);
+    box-shadow: 0 0 40px rgba(255,63,166,0.18);
+}
+
+/* -------------------- PIECES -------------------- */
+.piece {
+    width: 72%;
+    height: 72%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform .14s ease, box-shadow .14s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25), inset 0 2px 8px rgba(255,255,255,0.02);
+    border: 3px solid rgba(0,0,0,0.45);
+    cursor: pointer;
+}
+
+/* piece lift on hover */
+.piece:hover { transform: translateY(-6px) scale(1.03); }
+
+/* Player 1 - magenta glow */
+.piece.red {
+    background: radial-gradient(circle at 30% 30%, #ff63b8 0%, #d72b7a 55%, #a30f56 100%);
+    box-shadow: 0 10px 34px rgba(255,63,166,0.18), 0 0 40px rgba(255,63,166,0.08);
+    border-color: rgba(255,63,166,0.85);
+}
+
+/* Player 2 - cyan glow */
+.piece.black {
+    background: radial-gradient(circle at 30% 30%, #6ff7ff 0%, #00c2d2 55%, #006f86 100%);
+    box-shadow: 0 10px 34px rgba(0,240,255,0.18), 0 0 40px rgba(0,240,255,0.08);
+    border-color: rgba(0,240,255,0.85);
+}
+
+/* subtle halo under pieces */
+.piece::before {
+    content: '';
+    position: absolute;
+    inset: -8%;
+    border-radius: 50%;
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0.8;
+}
+.piece.red::before { background: radial-gradient(circle, rgba(255,63,166,0.12), transparent 35%); }
+.piece.black::before { background: radial-gradient(circle, rgba(0,240,255,0.10), transparent 35%); }
+
+/* King indicator */
+.piece.king::after {
+    content: '♛';
+    position: absolute;
+    top: 6px;
+    font-size: 18px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255,255,255,0.9);
+}
+
+/* -------------------- CONTROL PANEL — Redesigned -------------------- */
+.control-panel {
+    width: 380px;
+    padding: 24px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(6,8,12,0.96), rgba(12,14,20,0.98));
+    border: 1px solid rgba(255,255,255,0.04);
+    box-shadow: 0 30px 90px rgba(0,0,0,0.85), inset 0 2px 14px rgba(255,255,255,0.02);
+    color: #f6f7f8;
+}
+
+/* title */
+.control-panel h2 {
+    text-align: center;
+    color: var(--gold);
+    margin-bottom: 18px;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+/* MODE row (optional small icons) */
+.difficulty-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    color: rgba(255,255,255,0.85);
+    font-size: 11px;
+}
+
+/* Info box inside panel */
+.game-info {
+    padding: 14px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.05));
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: inset 0 8px 30px rgba(0,0,0,0.45);
+    margin-bottom: 16px;
+}
+
+/* Current turn styling + dot */
+.current-turn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--gold);
+    padding-bottom: 6px;
+    border-bottom: 1px dashed rgba(255,255,255,0.03);
+    margin-bottom: 10px;
+}
+.current-turn .turn-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    background: radial-gradient(circle, var(--accent-cyan), rgba(0,200,220,0.9));
+}
+
+/* utility class toggles via JS */
+.current-turn.dot-red .turn-dot { background: radial-gradient(circle, var(--accent-mag), rgba(200,30,120,0.9)); box-shadow: 0 0 10px rgba(255,63,166,0.24); }
+.current-turn.dot-cyan .turn-dot { background: radial-gradient(circle, var(--accent-cyan), rgba(0,200,220,0.9)); box-shadow: 0 0 10px rgba(0,240,255,0.24); }
+
+/* Score row */
+.score-display {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.player-score { color: var(--accent-mag); display:flex; gap:8px; align-items:center; }
+.player2-score { color: var(--accent-cyan); display:flex; gap:8px; align-items:center; }
+
+/* small status line */
+.game-status {
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255,255,255,0.85);
+    margin-top: 6px;
+}
+
+/* -------------------- Buttons (big, roomy, interactive) -------------------- */
+.retro-btn {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    color: #fff;
+    font-size: 12px;
+    border: 1px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+    box-shadow: 0 8px 0 rgba(0,0,0,0.5), 0 18px 40px rgba(0,0,0,0.6);
+    position: relative;
+    overflow: hidden;
+}
+
+/* accent bar at top */
+.retro-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 4px;
+    background: linear-gradient(90deg, var(--accent-mag), var(--accent-cyan));
+    opacity: 0.09;
+}
+
+/* hover: lift + neon glow */
+.retro-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.75), 0 0 30px rgba(0,240,255,0.04);
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+}
+
+/* active press */
+.retro-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.6);
+}
+
+/* disabled */
+.retro-btn:disabled {
+    opacity: 0.45; cursor: not-allowed; transform: none;
+}
+
+/* sound button extra "on" class to tint */
+#soundBtn.on { box-shadow: 0 0 18px 6px rgba(0,240,255,0.06); background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(255,255,255,0.01)); }
+
+/* -------------------- Modal -------------------- */
+.game-over-modal {
+    position: fixed; inset: 0; display: none; justify-content: center; align-items: center;
+    background: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.85)); z-index: 9999;
+}
+.modal-content {
+    width: min(92%, 520px); padding: 26px; border-radius: 14px;
+    background: linear-gradient(180deg,#081016,#091318); color: #fff;
+    border: 1px solid rgba(255,255,255,0.04); box-shadow: 0 30px 80px rgba(0,0,0,0.9);
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 900px) {
+    .game-container { flex-direction: column; align-items: center; gap: 18px; padding: 16px; }
+    .game-board { width: 420px; height: 420px; }
+    .control-panel { width: 92%; max-width: 420px; }
+}
+@media (max-width: 480px) {
+    .game-board { width: 320px; height: 320px; }
+    .piece { width: 68%; height: 68%; }
+    .control-panel { padding: 16px; }
+    .retro-btn { padding: 12px 10px; font-size: 11px; }
+}
+
+/* -------------------- Utilities & JS hooks -------------------- */
+/* last-move highlight helper */
+.last-move { box-shadow: 0 0 0 3px rgba(255,210,100,0.12); }
+
+/* small helper for dots */
+.turn-dot-small { width: 9px; height: 9px; border-radius: 50%; display:inline-block; vertical-align:middle; }
+
+/* ensure score spans are visible and nicely spaced */
+.score-display span { display:flex; align-items:center; gap:8px; }
+
+/* small instructions */
+.small-tip { color: rgba(255,255,255,0.6); font-size: 11px; text-align: center; margin-top: 6px; }
